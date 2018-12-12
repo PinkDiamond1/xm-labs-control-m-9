@@ -43,11 +43,11 @@ This document provides information about installing the xMatters (IT) for BMC Co
 
 ## 1. Configuring xMatters
 
-Configuring xMatters to combine with BMC Control-M Workload Automation requires the following step:
+Configuring xMatters to combine with BMC Control-M Workload Automation requires the following steps:
 
    * Create the REST API User
-   * Import of Communication plan
-   * Permissions
+   * Importing the Communication plan
+   * Setting Communication Plan and Form Permissions
    * Access Inbound Integration URL's for use in config.js
    * Access Inbound Integration URL's for use when Configuring Constants
    * Configure Constants
@@ -68,13 +68,13 @@ To create an integration user:
   * Make a note of these details; you will need them when configuring other parts of the integration.
   * Click Save.
   
-### 1.2 Import of Communication Plan
+### 1.2 Importing the Communication Plan
 1. Login to xMatters OnDemand
 2. Navigate to the Developer tab
 3. Import the Control-M [Communication Plan](/components/BMCControlMIntegration401.zip)
 4. You should now have a Communication Plan named `BMC Control-M Integration 4.0.1` in the list of Communication Plans
 
-### 1.3 Permissions
+### 1.3 Setting Communication Plan and Form Permissions
    
 #### 1.3.1 Access Permissions
 1. Login to xMatters OnDemand
@@ -120,14 +120,14 @@ To successfully configure the `config.js` (later on), navigate to xMatters OnDem
 8. Copy the URL that is displayed and use that for the `XMATTERS_CMDRESULT_FORM` variable in `config.js`.
 9. That's it for the URLs that are needed for `config.js` (later on).
 
-### 1.5 Collect Inbound Integration URL's for use when Configuring Constants
-To successfully configure the Constants used by the scripts in the Communication Plan, we need to collect the URLs for three inbound integrations:
+### 1.5 Collect Inbound Integration URL's for use when configuring Constants
+To successfully configure the the `FORM_LOOKUP_ARRAY` Constant used by the scripts in the Communication Plan, we need to collect the URLs for three inbound integrations:
 
 * `Trigger Abend Form`, 
 * `Trigger Complete Too Fast Form`, and 
 * `Trigger Run Too Long Form`.
 
-These are used in the `FORM_LOOKUP_ARRAY` Constant.
+These are used directly in the `FORM_LOOKUP_ARRAY` Constant.
 
 1. Login to xMatters OnDemand
 2. Navigate to the Developer tab
@@ -174,7 +174,7 @@ The following is the list of all Constants, the ones preceded by an asterisk(*) 
 | INCOMING\_TIMEZONE | `UTC` | Timezone of date/time values coming from Control-M. |
 | JOB\_ENDED\_OK | `Ended OK` | Job Status representing a successful completion. |
 | NAME\_PART\_DELIMITER | `-` | Character between Application, Sub-Application, and Order Folder to create compound Group name. |
-| OPT\_DEFAULT\_RECIPIENT\_TO\_APP\_OR\_JOB_NAME | `true` | If `true`, and no explicit Recipient was specified, make a Recipient from combining `application`-`sub_application`-`order_folder` if is missing or `nobody`.  If None of those three values are provided, then defaults to a Group named whatever the value is for `job_name`. |
+| OPT\_DEFAULT\_RECIPIENT\_TO\_<br>APP\_OR\_JOB_NAME | `true` | If `true`, and no explicit Recipient was specified, make a Recipient from combining `application`-`sub_application`-`order_folder` if is missing or `nobody`.  If None of those three values are provided, then defaults to a Group named whatever the value is for `job_name`. |
 | OPT\_DELETE\_EXISTING\_EVENTS | `true` | If `true`, delete any existing xMatters events for this order_id before continuing. |
 | XMATTERS\_IB\_USE\_WHEN\_NO\_MATCH | `ENDED NOT OK` | Job Status/Form key to use with `FORM_LOOKUP_ARRAY` when no others apply. |
 
@@ -219,7 +219,7 @@ Here's an example of a completely configured version of `FORM_LOOKUP_ARRAY` (NOT
 
 **Installing the integration service and updating the integration agent**
 
-To configure the integration agent for the BMC Control-M integration, you must copy the integration components into the integration agent; this process is similar to patching the application, where instead of copying files and folders one by one, you copy the contents of a single folder directly into the integration agent folder (<IAHOME>). The folder structure is identical to the existing integration agent installation, so copying the folder's contents automatically installs the required files to their appropriate locations. Copying these files will not overwrite any existing integrations. This integration includes the following components (in [control-m\_v401\_ia\_integration\_service.zip](/components/control-m_v401_ia_integration_service.zip)):
+To configure the integration agent for the BMC Control-M integration, you must copy the integration components into the integration agent; this process is similar to patching the application, where instead of copying files and folders one by one, you copy the contents of a single folder directly into the integration agent folder (\<IAHOME>). The folder structure is identical to the existing integration agent installation, so copying the folder's contents automatically installs the required files to their appropriate locations. Copying these files will not overwrite any existing integrations. This integration includes the following components (in [control-m\_v401\_ia\_integration\_service.zip](/components/control-m_v401_ia_integration_service.zip)):
 
 * **bin/linux/Controlm-APClientFromSysProperty.sh** OR **bin\windows\Controlm-APClientFromSysProperty.bat** 
 
@@ -309,7 +309,7 @@ Do one of the following to create the **emapi-918** directory:
 * **LInux:**
    * RedHat or Suse: Locate the `emapi-918-UNIX.TAR.gz` tar file in the `cdPath/Setup_files/TOOLS/EMAPI_FILES` directory on the Control-M/EM installation CD and type the following command to open and uncompress the file to any directory: 
 
-`-gunzip -c cdPath/TOOLS/EMAPI_FILES/emapi-918-UNIX.TAR.gz | tar xvf-`
+      `-gunzip -c cdPath/TOOLS/EMAPI_FILES/emapi-918-UNIX.TAR.gz | tar xvf-`
  
 All Control-M/EM API files and sub-directories are located in this directory. See attached Control-M/EM API primary subdirectories.
 
@@ -345,7 +345,7 @@ _**Note:** that if you want to change this password again, you will have to eith
 
 The following sections describe how to configure BMC Control-M to combine with xMatters.
 
-As mentioned above, there are two approaches to configuring Control-M to communicate using xMatters: the `Shout` Technique, and the `SNMP Trap` Technique.  They are mutually exclulsive; that is, only choose and configure one approaach or you may get duplicate event injections (e.g. if you Shout on an Abend and also get an SNMP Trap, both will send a notification.
+As mentioned above, there are two approaches to configuring Control-M to communicate using xMatters: the `Shout` Technique, and the `SNMP Trap` Technique.<br>They are mutually exclulsive; that is, only choose and configure one approaach or you may get duplicate event injections (e.g. if you Shout on an Abend and also get an SNMP Trap, both will send a notification).<br>**The `SNMP Trap` Technique is by far the most flexible for organizations with a large number of jobs.**
 
 ### 5.1 Shout Technique
 
