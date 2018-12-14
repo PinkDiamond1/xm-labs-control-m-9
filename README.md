@@ -254,9 +254,9 @@ To configure the integration agent for the BMC Control-M integration, you must c
 
    These are the .jar files from the EMAPI-918 installation.  If you upate the installation to a newer version, please copy and overwrite the files that are here from the new EMPAP-xxx installation.
    
-* **bc-fips-1.0.1.jar Must be copied to \<IAHome>/lib/** 
+* **bc-fips-1.0.1.jar Must be copied to \<IAHOME>/lib/** 
 
-   **IMPORTANT** Please copy the file “bc-fips-1.0.1.jar” from \<IAHome>/integrationservices/applications/controlm-401/classes/ to <IAHome>/lib/.
+   **IMPORTANT**: Please copy the file “**bc-fips-1.0.1.jar**” from \<IAHOME>/integrationservices/applications/controlm-401/classes/ to <IAHOME>/lib/.
    
    If you do not do this you will see errors like this in the IntegrationAgent.txt log file:
    
@@ -311,7 +311,9 @@ _**Note:** If you have more than one integration agent providing the BMC Control
 
 6. Save and close the files.
 
-7. Restart the integration agent. 
+7. Copy "**bc-fips-1.0.1.jar**" to \<IAHOME>/lib/ as described above.
+
+8. Restart the integration agent. 
 
 On Windows, the integration agent runs as a Windows Service; on Linux, it runs as a Linux daemon.  See the section titled `How to start the Integration Agent as a service or daemon` on [this page](https://help.xmatters.com/ondemand/iaguide/integration-agent.htm) for help.
 
