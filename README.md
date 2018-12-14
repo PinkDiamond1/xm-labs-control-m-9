@@ -33,6 +33,11 @@ Integrating xMatters with your other tools allows you to automatically transfer 
 * [Control-M EM API Documentation](/components/CTM_API_9.0.18.200_509513.pdf)
 * [Integration Agent, and Integration Agent Utilities](https://support.xmatters.com/hc/en-us/articles/201463419-Integration-Agent-for-xMatters-5-x-xMatters-On-Demand) (Installation Help is [here](https://help.xmatters.com/ondemand/iaguide/integration-agent-overview.htm?cshid=IntegrationAgent).)
 
+   Note: Here is some additional clarification regarding the Integration Agent Utilities:
+   * On [this page](https://help.xmatters.com/ondemand/iaguide/integration-agent.htm) there is a section called “Install and configure the Integration Agent”, and a sub-section called “Install the Integration Agent and IAUtils“ that you will need to follow.
+   * To download the Integration Agent Utilities, you need to go to the [Integration Agent for xMatters On-Demand](https://support.xmatters.com/hc/en-us/articles/201463419-Integration-Agent-for-xMatters-5-x-xMatters-On-Demand) downloads page, and get the second item in the table, titled “**Integration Agent Utilities 1.2.9**”.
+   * Now, follow the instructions under “Install the Integration Agent and IAUtils” [per above](https://help.xmatters.com/ondemand/iaguide/integration-agent.htm).
+
 # How it works
 
 The Control-M integration leverages a couple of techniques for allowing Control-M and the EM to ask xMatters to initiate an Event and sound out Notifications.  The first and most flexible mechanism is to catch the SNMP traps via the EM such that it calls a command that submits the request to the xMatters Integration Agent via a facility called Apclient.bin.  The other option is to configure Shout destinations which submits events to xMatters Integration Agent via the same Apclient.bin submission mechanism. Once the Integration Agent receives the request, the Event information is securely sent to xMatters via a POST to REST API Entry Point.
@@ -244,6 +249,29 @@ To configure the integration agent for the BMC Control-M integration, you must c
 * **integrationservices/applications/controlm-401/...:** 
 
    The files and folders that make up the heart of the Integration Service.
+
+* **integrationservices/applications/controlm-401/classes/...:** 
+
+   These are the .jar files from the EMAPI-918 installation.  If you upate the installation to a newer version, please copy and overwrite the files that are here from the new EMPAP-xxx installation.
+   
+* **bc-fips-1.0.1.jar Must be copied to \<IAHome>/lib/** 
+   **IMPORTANT** Please copy the file “bc-fips-1.0.1.jar” from \<IAHome>/integrationservices/applications/controlm-401/classes/ to <IAHome>/lib/.
+   
+   If you do not do this you will see errors like this in the IntegrationAgent.txt log file:
+   
+   ```
+   2018/12/14 11:26:00.390 -0600 CST [WrapperSimpleAppMain] FATAL - Exit code 87: The Mule server could not be started because an error of type class java.lang.NoSuchMethodError occurred.  Reason: org.bouncycastle.crypto.CryptoServicesRegistrar.setApprovedOnlyMode(Z)Z
+com.alarmpoint.integrationagent.exceptions.ExitCodeException: Exit code 87: The Mule server could not be started because an error of type class java.lang.NoSuchMethodError occurred.  Reason: org.bouncycastle.crypto.CryptoServicesRegistrar.setApprovedOnlyMode(Z)Z
+	at com.alarmpoint.integrationagent.boot.IAServer.startMule(IAServer.java:307)
+	at com.alarmpoint.integrationagent.boot.IAServer.main(IAServer.java:99)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.tanukisoftware.wrapper.WrapperSimpleApp.run(WrapperSimpleApp.java:240)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: org.bouncycastle.crypto.CryptoServicesRegistrar.setApprovedOnlyMode(Z)Z
+```
 
 * **integrationservices/applications/controlm-401/config.js:** 
 
