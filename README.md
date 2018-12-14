@@ -271,7 +271,7 @@ com.alarmpoint.integrationagent.exceptions.ExitCodeException: Exit code 87: The 
 	at org.tanukisoftware.wrapper.WrapperSimpleApp.run(WrapperSimpleApp.java:240)
 	at java.lang.Thread.run(Thread.java:745)
 Caused by: java.lang.NoSuchMethodError: org.bouncycastle.crypto.CryptoServicesRegistrar.setApprovedOnlyMode(Z)Z
-```
+   ```
 
 * **integrationservices/applications/controlm-401/config.js:** 
 
