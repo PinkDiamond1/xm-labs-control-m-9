@@ -256,7 +256,7 @@ To configure the integration agent for the BMC Control-M integration, you must c
    
 * **bc-fips-1.0.1.jar Must be copied to \<IAHOME>/lib/** 
 
-   **IMPORTANT**: Please copy the file “**bc-fips-1.0.1.jar**” from \<IAHOME>/integrationservices/applications/controlm-401/classes/ to <IAHOME>/lib/.
+   **IMPORTANT**: Please copy the file “**bc-fips-1.0.1.jar**” from \<IAHOME>/integrationservices/applications/controlm-401/classes/ to \<IAHOME>/lib/.
    
    If you do not do this you will see errors like this in the IntegrationAgent.txt log file:
    
@@ -311,7 +311,7 @@ _**Note:** If you have more than one integration agent providing the BMC Control
 
 6. Save and close the files.
 
-7. Copy "**bc-fips-1.0.1.jar**" to \<IAHOME>/lib/ as described above.
+7. If you have not already done so, copy "**bc-fips-1.0.1.jar**" to \<IAHOME>/lib/ as described above.
 
 8. Restart the integration agent. 
 
