@@ -330,7 +330,7 @@ Ensure the following is installed:
    * Control-M/EM in your network environment 
    * Java Developer's Kit (JDK) version 1.8.x or later or Java Runtime Environment (JRE) version 1.8.x or later on the computer hosting your project's working directory. `JAVA_HOME` environment variable should point to the JDK/JRE directory/library.
 
-_**Note:** The `JAVA_HOME` environment refers to the directory where the JRE is installed. The JDK contains the JRE, but at a different level in the file hierarchy. For example, if the Java 2 SDK or JRE was installed in `/home/ctm_em`, `JAVA_HOME` would be either:`/ctm_em/jdk1.8.x/jre [JDK]` or `/home/ctm_em/jre1.8.x [JRE]`.
+_**NOTE 1:** The `JAVA_HOME` environment refers to the directory where the JRE is installed. The JDK contains the JRE, but at a different level in the file hierarchy. For example, if the Java 2 SDK or JRE was installed in `/home/ctm_em`, `JAVA_HOME` would be either:`/ctm_em/jdk1.8.x/jre [JDK]` or `/home/ctm_em/jre1.8.x [JRE]`.
 
 **To Install Control-M/EM API:** 
 
@@ -346,7 +346,9 @@ All Control-M/EM API files and sub-directories are located in this directory. Se
 
 You need to run the `emapi-configure.sh` utility to make sure it configures the `communications.xml` file.
 
-_**NOTE:** To uninstall Control-M/EM, delete the Control-M/EM API directory according to your version. For example, for version 9.0.18 delete the emapi-918 directory. Do not copy the Control-M/EM API version 9.0.18 files directly over the previous installation This may cause unpredictable behavior._
+_**NOTE 2:** Please ensure that at a minimum the `EMAPI_DIR` environment variable is visible and set correctly before starting the xMatters Integration Agent.  This is critical so that the EMAPI Libraries are able to find the installed EMAPI configuration.  In general, your Control-M Environment Variables should be set and visible, including `EM_HOME`, `CONTROLM`, etc._
+
+_**NOTE 3:** To uninstall Control-M/EM, delete the Control-M/EM API directory according to your version. For example, for version 9.0.18 delete the emapi-918 directory. Do not copy the Control-M/EM API version 9.0.18 files directly over the previous installation This may cause unpredictable behavior._
 
 ### 3.2 Configure xMatters Integration Agent
 
