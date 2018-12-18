@@ -283,7 +283,7 @@ To configure the integration agent for the BMC Control-M integration, you must c
 
 * **Confirming Access to the Control-M Command Line Utilities**
 
-   As mentioned in **[Pre-Requisites](#pre)**, in order for the action-oriented Response Options to work properly, the Integration Agent tries to run one of these Control-M utilities: `ctmpsm`, `ctmlog`, or `ctmkilljob` based on the corresponding Response Option.  If these are not available in the PATH, see **[Modifying Access to the Control-M Command Line Utilities](#clu)** for detailed instructions on how to enable access to this commands.
+   As mentioned in **[Pre-Requisites](#pre)**, in order for the action-oriented Response Options to work properly, the Integration Agent tries to run one of these Control-M utilities: `ctmpsm`, `ctmlog`, or `ctmkilljob` based on the corresponding Response Option.  If these are not available in the PATH, see **[Modifying Access to the Control-M Command Line Utilities](#clu)** for detailed instructions on how to enable access to these commands.
 
 
 Once you have installed the Integration Service's files and folders, you will need to modify the **integrationservices/applications/controlm-401/config.js** and **conf/IAConfig.xml** files to suit your deployment configuration.
