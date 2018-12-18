@@ -21,11 +21,14 @@ Integrating xMatters with your other tools allows you to automatically transfer 
   * Initiate a targeted chat room via Slack, HipChat or Hubot
   * Record chat room activity back into a service management ticket
 
-# Pre-Requisites
+# <a name="pre"></a>Pre-Requisites
 * BMC Control-M Workload Automation v9.0.18 (and above)
 * BMC CONTROL-M/EM API v9.0.18 (and above)
 * xMatters OnDemand
 * xMatters Integration Agent 5.2.2 (and above, including Integratoin Agent Utilities)
+    * We **STRONGLY** recommend that you install this integration (i.e. Integration Agent and Integration Service) directly on a system running the BMC Control-M Agent, or the BMC Control-M Server itself.
+    * That is because the Response Options for getting the Logs, Output, as well as commands impacting the job, like Rerun use commands (`ctmpsm`, `ctmlog`, `ctmkilljob`) that are only available via the BMC Control-M Agent or Server installations.
+    * If you do not intend to use Response Options that will need to request Logs, Output, or control the job in any way, then you may install the Integration Agent and Integration Service anywhere that the BMC Control-M/EM API v9.0.18 (and above) are installed.
 
 # Files
 * [Communication Plan](/components/BMCControlMIntegration401.zip)
@@ -222,7 +225,7 @@ Here's an example of a completely configured version of `FORM_LOOKUP_ARRAY` (NOT
 
 ## 2. Installation and Configuration of the Integration Service
 
-**Installing the integration service and updating the integration agent**
+### **Overview**
 
 To configure the integration agent for the BMC Control-M integration, you must copy the integration components into the integration agent; this process is similar to patching the application, where instead of copying files and folders one by one, you copy the contents of a single folder directly into the integration agent folder (\<IAHOME>). The folder structure is identical to the existing integration agent installation, so copying the folder's contents automatically installs the required files to their appropriate locations. Copying these files will not overwrite any existing integrations. This integration includes the following components (in [control-m\_v401\_ia\_integration\_service.zip](/components/control-m_v401_ia_integration_service.zip)):
 
@@ -278,12 +281,16 @@ To configure the integration agent for the BMC Control-M integration, you must c
 
    The main configuration file for the integration; includes API connection information and user information.  This is the only file under the controlm-401/ folder that you will need to configure as part of setting up the integration.
 
+* **Confirming Access to the Control-M Command Line Utilities**
 
-Once you have installed the files and folders, you will need to modify the **integrationservices/applications/controlm-401/config.js** and **conf/IAConfig.xml** files to suit your deployment configuration.
+   As mentioned in **[Pre-Requisites](#pre)**, in order for the action-oriented Response Options to work properly, the Integration Agent tries to run one of these Control-M utilities: `ctmpsm`, `ctmlog`, or `ctmkilljob` based on the corresponding Response Option.  If these are not available in the PATH, see **[Modifying Access to the Control-M Command Line Utilities](#clu)** for detailed instructions on how to enable access to this commands.
 
-_**Note:** If you have more than one integration agent providing the BMC Control-M service, repeat the following steps for each one._
 
-**To install the integration service:**
+Once you have installed the Integration Service's files and folders, you will need to modify the **integrationservices/applications/controlm-401/config.js** and **conf/IAConfig.xml** files to suit your deployment configuration.
+
+_**Note 1:**_ If you have more than one integration agent providing the BMC Control-M service, repeat the following steps for each one.
+
+### **Installing the integration service**
 
 1. Extract and copy all of the contents of the [control-m\_v401\_ia\_integration\_service.zip](/components/control-m_v401_ia_integration_service.zip) archive file to the \<IAHOME\> folder.
 
@@ -313,9 +320,25 @@ _**Note:** If you have more than one integration agent providing the BMC Control
 
 7. If you have not already done so, copy "**bc-fips-1.0.1.jar**" to \<IAHOME>/lib/ as described above.
 
-8. Restart the integration agent. 
+8. Restart the Integration Agent. 
 
-On Windows, the integration agent runs as a Windows Service; on Linux, it runs as a Linux daemon.  See the section titled `How to start the Integration Agent as a service or daemon` on [this page](https://help.xmatters.com/ondemand/iaguide/integration-agent.htm) for help.
+   On Windows, the integration agent runs as a Windows Service; on Linux, it runs as a Linux daemon.  See the section titled `How to start the Integration Agent as a service or daemon` on [this page](https://help.xmatters.com/ondemand/iaguide/integration-agent.htm) for help.
+
+* <a name="clu"></a>**Modifying Access to the Control-M Command Line Utilities**
+
+   If the Control-M utilities: `ctmpsm`, `ctmlog`, or `ctmkilljob` are not available in the PATH, but are on the system running the Integration Agent, you can explictely put their location into the `controlm.js` file.
+
+   * In `controlm.js`, look around line 152 for the variables named `CTMPSM_COMMAND`, `CTMLOG_COMMAND`, and `CTMKILLJOB_COMMAND`.
+   * Put the environment specific fully qualified path to those commands in place of the simple command reference/name you will find in those variables currently.  
+   * For example, if you are installing in a Linux environment, the change may look something like this (assuming the Control-M Agent is installed under `/home/ctlmuser/ctm_agent`):
+
+      * Before: ```var CTMPSM_COMMAND     = "ctmpsm";```
+      * After: ``` var CTMPSM_COMMAND     = "/home/ctlmuser/ctm_agent/ctm/exe_9.0.18.200/ctmpsm";```
+      
+      * **Be sure to restart the Integration Agent after you make changes to any of the Integration Service source files.**
+    
+   * The User that the Integration Agent is running as *must* have permissions to execute those commands too!
+   * If you will not be using those action oriented Response Options, then you can ignore the need for those utilities, and simply remove those Response Options from the Forms in the Communicaiton Plan.
 
 ## 3. Installing Control M/EM API files
 
