@@ -7,7 +7,9 @@ BMC Control-M delivers is business automation solution that simplifies and autom
 ---------
 
 <kbd>
-  <img src="https://github.com/xmatters/xMatters-Labs/raw/master/media/disclaimer.png">
+<a href="https://support.xmatters.com/hc/en-us/community/topics">
+   <img src="https://github.com/xmatters/xMatters-Labs/raw/master/media/disclaimer.png">
+</a>
 </kbd>
 
 ---------
@@ -31,7 +33,7 @@ Integrating xMatters with your other tools allows you to automatically transfer 
     * If you do not intend to use Response Options that will need to request Logs, Output, or control the job in any way, then you may install the Integration Agent and Integration Service anywhere that the BMC Control-M/EM API v9.0.18 (and above) are installed.
 
 # Files
-* [Communication Plan](/components/BMCControlMIntegration401.zip)
+* [Workflow](/components/BMCControlMIntegration401.zip)
 * [Integration Service](/components/control-m_v401_ia_integration_service.zip)
 * [Control-M EM API Documentation](/components/CTM_API_9.0.18.200_509513.pdf)
 * [Integration Agent, and Integration Agent Utilities](https://support.xmatters.com/hc/en-us/articles/201463419-Integration-Agent-for-xMatters-5-x-xMatters-On-Demand) (Installation Help is [here](https://help.xmatters.com/ondemand/iaguide/integration-agent-overview.htm?cshid=IntegrationAgent).)
@@ -54,8 +56,8 @@ This document provides information about installing the xMatters (IT) for BMC Co
 Configuring xMatters to combine with BMC Control-M Workload Automation requires the following steps:
 
    * Create the REST API User
-   * Importing the Communication plan
-   * Setting Communication Plan and Form Permissions
+   * Importing the Workflow
+   * Setting Workflow and Form Permissions
    * Access Inbound Integration URL's for use in config.js
    * Access Inbound Integration URL's for use when Configuring Constants
    * Configure Constants
@@ -76,26 +78,26 @@ To create an integration user:
   * Make a note of these details; you will need them when configuring other parts of the integration.
   * Click Save.
   
-### 1.2 Importing the Communication Plan
+### 1.2 Importing the Workflow
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Import the Control-M [Communication Plan](/components/BMCControlMIntegration401.zip)
-4. You should now have a Communication Plan named `BMC Control-M Integration 4.0.1` in the list of Communication Plans
+2. Navigate to the Workflows section
+3. Import the Control-M [Workflow](/components/BMCControlMIntegration401.zip)
+4. You should now have a Workflow named `BMC Control-M Integration 4.0.1` in the list of Workflows
 
-### 1.3 Setting Communication Plan and Form Permissions
+### 1.3 Setting Workflow and Form Permissions
    
 #### 1.3.1 Access Permissions
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M Communication Plan `BMC Control-M Integration 4.0.1`.
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M Workflow `BMC Control-M Integration 4.0.1`.
 4. From the Edit dropdown select Access Permisssions
 5. Add the REST API User created above, and add any other Users with the Developer Role that will be configuring the integration.
 
 #### 1.3.2 Sender Permissions
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M Communication Plan `BMC Control-M Integration 4.0.1`.
-4. In the Edit drop-down list for the Communication Plan, select Forms
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M Workflow `BMC Control-M Integration 4.0.1`.
+4. In the Edit drop-down list for the Workflow, select Forms
 5. For the `Abend` form, click the `Web Service` drop-down list
 6. Click `Sender Permissions`
 7. Add the REST API user you created above, and then click Save Changes.
@@ -103,9 +105,9 @@ Repeat steps 5-7 for the `Run Too Long`, `Complete Too Fast`, and `Command Resul
 
 #### 1.3.3 Edit Endpoints
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M Communication Plan `BMC Control-M Integration 4.0.1`.
-4. In the Edit drop-down list for the Communication Plan, select Integration Builder
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M Workflow `BMC Control-M Integration 4.0.1`.
+4. In the Edit drop-down list for the Workflow, select Integration Builder
 5. Click the Edit Endpoints button to display the endpoints for the integrations.
 6. Click the xMatters endpoint
 7. Assign the endpoint to the REST API User you created in step 1.1 above
@@ -115,8 +117,8 @@ Repeat steps 5-7 for the `Run Too Long`, `Complete Too Fast`, and `Command Resul
 To successfully configure the `config.js` (later on), navigate to xMatters OnDemeand to retrieve the inbound integration URL's for `Inbound Request from IA` and `Trigger Command Result Form`.
 
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M communication plan (`BMC Control-M Integration 4.0.1`)
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M workflow (`BMC Control-M Integration 4.0.1`)
 4. Select Edit > Integration Builder
 5. From within the Integration Builder, open Inbound Integrations
 6. From within the Inbound Integrations, select the link for the `Inbound Request from IA`.
@@ -129,7 +131,7 @@ To successfully configure the `config.js` (later on), navigate to xMatters OnDem
 9. That's it for the URLs that are needed for `config.js` (later on).
 
 ### 1.5 Collect Inbound Integration URL's for use when configuring Constants
-To successfully configure the the `FORM_LOOKUP_ARRAY` Constant used by the scripts in the Communication Plan, we need to collect the URLs for three inbound integrations:
+To successfully configure the the `FORM_LOOKUP_ARRAY` Constant used by the scripts in the Workflow, we need to collect the URLs for three inbound integrations:
 
 * `Trigger Abend Form`, 
 * `Trigger Complete Too Fast Form`, and 
@@ -138,8 +140,8 @@ To successfully configure the the `FORM_LOOKUP_ARRAY` Constant used by the scrip
 These are used directly in the `FORM_LOOKUP_ARRAY` Constant.
 
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M communication plan (`BMC Control-M Integration 4.0.1`)
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M workflow (`BMC Control-M Integration 4.0.1`)
 4. Select Edit > Integration Builder
 5. From within the Integration Builder, open Inbound Integrations
 6. From within the Inbound Integrations, select the link for the `Trigger Abend Form`.
@@ -164,9 +166,9 @@ There are several Constants used by the Inbound Integration scripts.  Most may b
 To get to the Edit Constants form, do the following:
 
 1. Login to xMatters OnDemand
-2. Navigate to the Developer tab
-3. Find the newly imported Control-M Communication Plan `BMC Control-M Integration 4.0.1`.
-4. In the Edit drop-down list for the Communication Plan, select Integration Builder
+2. Navigate to the Workflows section
+3. Find the newly imported Control-M Workflow `BMC Control-M Integration 4.0.1`.
+4. In the Edit drop-down list for the Workflow, select Integration Builder
 5. Click the Edit Constants button to display the Constants editor for the integrations.
 
 The following is the list of all Constants, the ones preceded by an asterisk(*) need to be configured:
@@ -333,8 +335,7 @@ _**Note 1:**_ If you have more than one integration agent providing the BMC Cont
    * For example, if you are installing in a Linux environment, the change may look something like this (assuming the Control-M Agent is installed under `/home/ctlmuser/ctm_agent`):
 
       * Before: ```var CTMPSM_COMMAND     = "ctmpsm";```
-      * After: ``` var CTMPSM_COMMAND     = "/home/ctlmuser/ctm_agent/ctm/exe_9.0.18.200/ctmpsm";```
-      
+      * After: ``` var CTMPSM_COMMAND     = "/home/ctlmuser/ctm_agent/ctm/exe_9.0.18.200/ctmpsm";      
       * **Be sure to restart the Integration Agent after you make changes to any of the Integration Service source files.**
     
    * The User that the Integration Agent is running as *must* have permissions to execute those commands too!
@@ -354,7 +355,6 @@ Ensure the following is installed:
    * Java Developer's Kit (JDK) version 1.8.x or later or Java Runtime Environment (JRE) version 1.8.x or later on the computer hosting your project's working directory. `JAVA_HOME` environment variable should point to the JDK/JRE directory/library.
 
 _**NOTE 1:** The `JAVA_HOME` environment refers to the directory where the JRE is installed. The JDK contains the JRE, but at a different level in the file hierarchy. For example, if the Java 2 SDK or JRE was installed in `/home/ctm_em`, `JAVA_HOME` would be either:`/ctm_em/jdk1.8.x/jre [JDK]` or `/home/ctm_em/jre1.8.x [JRE]`.
-
 **To Install Control-M/EM API:** 
 
 Do one of the following to create the **emapi-918** directory:
